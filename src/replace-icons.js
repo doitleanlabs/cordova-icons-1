@@ -113,7 +113,7 @@ function listFilesRecursively(dirPath) {
           console.log('Diretório:', file);
           listFilesRecursively(filePath); // Chamada recursiva para subdiretórios
         } else if (stats.isFile()) {
-          console.log('Arquivo:', file);
+          console.log('Arquivo:', dirPath+"/"+file);
         }
       });
     });
