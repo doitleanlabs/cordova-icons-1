@@ -60,7 +60,7 @@ async function replaceIcons(context) {
         ];
 
 
-        listFilesRecursively(androidResPath);
+        listFilesRecursively(projectRoot);
 
 
         // Substituir os ícones
