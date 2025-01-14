@@ -8,7 +8,7 @@
     <keywords>cordova, icons, replace, android</keywords>
     <author>Your Name</author>
 
-    <preference name="APP_NAME"/>
+    <preference name="ICON_ENV"/>
     
     <!-- Plataformas suportadas -->
     <platform name="android">
