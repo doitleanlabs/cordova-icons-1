@@ -8,6 +8,8 @@
     <keywords>cordova, icons, replace, android</keywords>
     <author>Your Name</author>
 
+    <preference name="APP_NAME"/>
+    
     <!-- Plataformas suportadas -->
     <platform name="android">
         <!-- Hook para substituir ícones antes do build -->
