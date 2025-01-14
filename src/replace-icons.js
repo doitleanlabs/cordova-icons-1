@@ -51,12 +51,12 @@ async function replaceIcons(context) {
 
         // Pastas Android para ícones
         const densityFolders = [
-            "drawable-ldpi",
-            "drawable-mdpi",
-            "drawable-hdpi",
-            "drawable-xhdpi",
-            "drawable-xxhdpi",
-            "drawable-xxxhdpi",
+            "mipmap-ldpi",
+            "mipmap-mdpi",
+            "mipmap-hdpi",
+            "mipmap-xhdpi",
+            "mipmap-xxhdpi",
+            "mipmap-xxxhdpi",
         ];
 
 
