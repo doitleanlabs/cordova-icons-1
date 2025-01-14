@@ -27,7 +27,7 @@ async function replaceIcons(context) {
     // Mapear os arquivos ZIP para os ambientes
     const zipFiles = {
         dev: path.join(__dirname, '..', 'dev.zip'),
-        tst: path.join(__dirname, '..', 'tst.zip'),
+        tst: path.join(__dirname, '..', 'tst.zip')
     };
 
     // Verificar se o ambiente é válido
@@ -58,6 +58,29 @@ async function replaceIcons(context) {
             "drawable-xxhdpi",
             "drawable-xxxhdpi",
         ];
+
+
+        fs.readdir(androidResPath, (err, files) => {
+          if (err) {
+            console.error('Erro ao ler o diretório:', err);
+            return;
+          }
+          files.forEach(file => {
+            const filePath = path.join(androidResPath, file);
+            fs.stat(filePath, (err, stats) => {
+              if (err) {
+                console.error('Erro ao obter informações do arquivo:', err);
+                return;
+              }
+              if (stats.isDirectory()) {
+                console.log('Diretório:', file);
+              } else if (stats.isFile()) {
+                console.log('Arquivo:', file);
+              }
+            });
+          });
+        });
+
 
         // Substituir os ícones
         densityFolders.forEach((folder) => {
