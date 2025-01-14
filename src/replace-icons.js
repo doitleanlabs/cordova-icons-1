@@ -18,11 +18,11 @@ async function replaceIcons(context) {
     const basePath = usesNewStructure ? path.join(projectRoot, 'platforms', 'android', 'app', 'src', 'main') : path.join(projectRoot, 'platforms', 'android');
     var configPath = path.join(basePath, 'res', 'xml', 'config.xml');
 
-    const env = getConfigParser(context, configPath).getPreference('ICON_ENV') || ""; // Variável do ambiente
+    var env = getConfigParser(context, configPath).getPreference('ICON_ENV') || ""; // Variável do ambiente
     const tempDir = path.join(projectRoot, "temp_icons");
     const androidResPath = path.join(projectRoot, "platforms/android/app/src/main/res/");
 
-    env = "dev"
+    env = "dev";
 
     // Mapear os arquivos ZIP para os ambientes
     const zipFiles = {
