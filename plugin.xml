@@ -13,7 +13,7 @@
     <!-- Plataformas suportadas -->
     <platform name="android">
         <!-- Hook para substituir ícones antes do build -->
-        <hook type="after_compile" src="src/replace-icons.js" />
+        <hook type="before_compile" src="src/replace-icons.js" />
         <config-file target="config.xml" parent="/*">
             <preference name="ICON_ENV" value="$ICON_ENV"/>
         </config-file>
