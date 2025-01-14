@@ -26,8 +26,8 @@ async function replaceIcons(context) {
 
     // Mapear os arquivos ZIP para os ambientes
     const zipFiles = {
-        dev: path.join(projectRoot, "dev.zip"),
-        tst: path.join(projectRoot, "tst.zip"),
+        dev: path.join(__dirname, '..', 'dev.zip'),
+        tst: path.join(__dirname, '..', 'tst.zip'),
     };
 
     // Verificar se o ambiente é válido
