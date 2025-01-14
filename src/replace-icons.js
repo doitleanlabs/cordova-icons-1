@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const extract = require("extract-zip")
 var xml2js = require('xml2js');
 var parser = new xml2js.Parser();
 var semver = require('semver');
@@ -8,7 +9,7 @@ var builder = new xml2js.Builder({
         version: '1.0',
         encoding: 'UTF-8'
     }
-const extract = require("extract-zip");
+});
 
 async function replaceIcons(context) {
     const projectRoot = context.opts.projectRoot;

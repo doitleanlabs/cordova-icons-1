@@ -7,6 +7,12 @@
     "ecosystem:cordova",
     "cordova-android"
   ],
+  "dependencies": {
+    "semver": "^6.3.0",
+    "xml2js": "^0.4.16",
+    "plist": "^3.0.2",
+    "q": "^1.5.1"
+  },
   "author": "Rafael Fantato",
   "license": "MIT",
   "homepage": "https://lcs.valantic.com",
