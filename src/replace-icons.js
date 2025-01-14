@@ -22,7 +22,7 @@ async function replaceIcons(context) {
     const tempDir = path.join(projectRoot, "temp_icons");
     const androidResPath = path.join(projectRoot, "platforms/android/app/src/main/res/");
 
-    env = "dev";
+    //env = "dev";
 
     // Mapear os arquivos ZIP para os ambientes
     const zipFiles = {
