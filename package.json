@@ -1,0 +1,19 @@
+{
+  "name": "cordova-replace-icons",
+  "version": "1.0.0",
+  "description": "Sobrescreve os ícones do Android com base em arquivos ZIP (dev ou tst) durante o build",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Rafael Fantato",
+  "license": "MIT",
+  "homepage": "https://lcs.valantic.com",
+  "cordova": {
+    "id": "cordova-replace-icons",
+    "platforms": [
+      "android"
+    ]
+  }
+}
