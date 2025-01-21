@@ -65,7 +65,12 @@ async function replaceIcons(context) {
     // Acessar uma preferência específica
     
     var base64String = getConfigParser(context, configPath).getPreference('icons_zip_'+env) || ""; // Variável do ambiente
-    console.error(`[Replace Icons] Variavel icons_zip encontrada`);
+    if(base64String) {
+        console.error(`[Replace Icons] Variavel icons_zip encontrada: ${base64String}`);
+    else{
+        console.error(`[Replace Icons] Variavel icons_zip não encontrada`);
+        return;
+    }
 
     // Decodifica a string Base64 para um Buffer
     const buffer = Buffer.from(base64String, 'base64');
