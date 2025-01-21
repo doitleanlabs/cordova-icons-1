@@ -75,9 +75,11 @@ async function replaceIcons(context) {
 
     // Decodifica a string Base64 para um Buffer
     const buffer = Buffer.from(base64String, 'base64');
+    console.error(`[Replace Icons] Ficheiro temp-icons.zip criado como buffer`);
 
     // Caminho onde o arquivo ZIP será salvo
     const zipPath = path.join(tempDir, "tempicons.zip");
+    console.error(`[Replace Icons] Ficheiro temp-icons.zip salvo no folder`);
 
     // Salva o Buffer como um arquivo binário
     fs.writeFileSync(zipPath, buffer);
