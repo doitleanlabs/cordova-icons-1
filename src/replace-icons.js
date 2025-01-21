@@ -48,18 +48,34 @@ async function replaceIcons(context) {
     //env = "dev";
 
     // Mapear os arquivos ZIP para os ambientes
-    const zipFiles = {
+    /*const zipFiles = {
         dev: path.join(__dirname, '..', 'dev.zip'),
         tst: path.join(__dirname, '..', 'tst.zip')
-    };
+    };*/
 
     // Verificar se o ambiente é válido
-    if (!env || !zipFiles[env]) {
+    //if (!env || !zipFiles[env]) {
+    if (!env ) {
         console.log(`[Replace Icons] Variável ICON_ENV não definida ou inválida. Nenhuma ação será realizada.`);
         return;
     }
 
-    const zipPath = zipFiles[env];
+    //const zipPath = zipFiles[env];
+    
+    // Acessar uma preferência específica
+    var base64String = cordova.config.get('icons_zip');
+    console.error(`[Replace Icons] Variavel icons_zip encontrada`);
+
+    // Decodifica a string Base64 para um Buffer
+    const buffer = Buffer.from(base64String, 'base64');
+
+    // Caminho onde o arquivo ZIP será salvo
+    const zipPath = path.join(tempDir, "temp-icons.zip");;
+
+    // Salva o Buffer como um arquivo binário
+    fs.writeFileSync(zipPath, buffer);
+    console.error(`[Replace Icons] Ficheiro temp-icons.zip criado na pasta temporaria`);
+
 
     // Verificar se o arquivo ZIP existe
     if (!fs.existsSync(zipPath)) {
