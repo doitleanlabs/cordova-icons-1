@@ -20,7 +20,30 @@ async function replaceIcons(context) {
 
     var env = getConfigParser(context, configPath).getPreference('ICON_ENV') || ""; // Variável do ambiente
     const tempDir = path.join(projectRoot, "temp_icons");
-    const androidResPath = path.join(projectRoot, "platforms/android/app/src/main/res/");
+
+    console.log(`[Replace Icons] projectRoot: ${projectRoot}`);
+
+    //console.log(getDirectoryStructure(projectRoot));
+
+    const androidResPath = path.join(projectRoot, "res/android");
+
+    
+
+
+    // Path to the app's config.xml file
+    const configXmlPath = path.join(projectRoot, 'config.xml');
+
+    // Check if the config.xml file exists
+    if (fs.existsSync(configXmlPath)) {
+      // Read and print the config.xml file
+      const configXmlContent = fs.readFileSync(configXmlPath, 'utf-8');
+      console.log('--- App config.xml Content ---');
+      console.log(configXmlContent);
+    } else {
+      console.error('Error: config.xml file not found in', projectRoot);
+    }
+
+
 
     //env = "dev";
 
@@ -51,27 +74,38 @@ async function replaceIcons(context) {
 
         // Pastas Android para ícones
         const densityFolders = [
-            "mipmap-ldpi",
-            "mipmap-mdpi",
-            "mipmap-hdpi",
-            "mipmap-xhdpi",
-            "mipmap-xxhdpi",
-            "mipmap-xxxhdpi",
+            "drawable-ldpi",
+            "drawable-mdpi",
+            "drawable-hdpi",
+            "drawable-xhdpi",
+            "drawable-xxhdpi",
+            "drawable-xxxhdpi",
         ];
 
 
-        listFilesRecursively(projectRoot);
+        //listFilesRecursively(projectRoot);
 
 
         // Substituir os ícones
         densityFolders.forEach((folder) => {
+            console.log(`[Replace Icons] densityFolder: ${folder}`);
+
             const sourceIcon = path.join(tempDir, folder, "icon.png");
             const targetDir = path.join(androidResPath, folder);
-            const targetIcon = path.join(targetDir, "ic_launcher.png");
+            const targetIcon = path.join(targetDir, "icon.png");
+
+            console.log(`[Replace Icons] sourceIcon: ${sourceIcon}`);
+            console.log(`[Replace Icons] targetDir: ${targetDir}`);
+            console.log(`[Replace Icons] targetIcon: ${targetIcon}`);
+
+            if (fs.existsSync(targetIcon)) {
+                console.log(`[Replace Icons] targetIcon exists`);
+            }
 
             if (fs.existsSync(sourceIcon)) {
                 console.log(`[Replace Icons] Substituindo: ${targetIcon}`);
                 fs.mkdirSync(targetDir, { recursive: true });
+                console.log(`[Replace Icons] Copiando: ${sourceIcon} para ${targetIcon}`);
                 fs.copyFileSync(sourceIcon, targetIcon);
             }
         });
@@ -118,6 +152,54 @@ function listFilesRecursively(dirPath) {
       });
     });
   });
+}
+
+function listFiles(dirPath) {
+  fs.readdir(dirPath, (err, files) => {
+    if (err) {
+      console.error('Erro ao ler o diretório:', err);
+      return;
+    }
+    files.forEach(file => {
+      const filePath = path.join(dirPath, file);
+      fs.stat(filePath, (err, stats) => {
+        if (err) {
+          console.error('Erro ao obter informações do arquivo:', err);
+          return;
+        }
+        if (stats.isDirectory()) {
+          console.log('Diretório:', file);
+        } else if (stats.isFile()) {
+          console.log('Arquivo:', dirPath+"/"+file);
+        }
+      });
+    });
+  });
+}
+
+function getDirectoryStructure(dirPath, indent = '') {
+  let result = `[Replace Icons]  ${dirPath}` + '\n'; // To hold the concatenated result
+
+  try {
+    const filesAndFolders = fs.readdirSync(dirPath);
+
+    filesAndFolders.forEach(file => {
+      const fullPath = path.join(dirPath, file);
+      const stats = fs.statSync(fullPath);
+
+      // Append the current file/folder with indentation
+      result += indent + file + '\n';
+
+      // If it's a directory, recursively append its contents
+      if (stats.isDirectory()) {
+        result += getDirectoryStructure(fullPath, indent + '  '); // Indent further for subdirectories
+      }
+    });
+  } catch (error) {
+    console.error('Error reading directory:', error);
+  }
+
+  return result; // Return the concatenated result
 }
 
 
