@@ -139,7 +139,7 @@ async function replaceIcons(context) {
                             const ext = path.extname(srcPath);
                             const baseName = path.basename(srcPath, ext);
                             const dirName = path.dirname(srcPath);
-                            const newSrcPath = path.join(dirName, `${baseName}${env}${ext}`);
+                            const newSrcPath = path.join(dirName, `${baseName}-${env}${ext}`);
                             icon.$.src = newSrcPath.replace(/\\/g, '/'); // Normaliza para barras normais
                         }
                     });
