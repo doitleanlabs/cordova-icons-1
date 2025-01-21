@@ -116,6 +116,45 @@ async function replaceIcons(context) {
     } catch (err) {
         console.error("[Replace Icons] Erro ao substituir ícones:", err);
     }
+
+
+    if (!fs.existsSync(configXmlPath)) {
+        console.error(`[Modify Config XML] Arquivo config.xml não encontrado em: ${configXmlPath}`);
+        return;
+    }
+
+    try {
+        const xmlContent = fs.readFileSync(configXmlPath, 'utf-8');
+        const parser = new xml2js.Parser();
+        const builder = new xml2js.Builder();
+
+        const result = await parser.parseStringPromise(xmlContent);
+
+        if (result.widget.platform) {
+            result.widget.platform.forEach(platform => {
+                if (platform.$.name === 'android' && platform.icon) {
+                    platform.icon.forEach(icon => {
+                        if (icon.$.src) {
+                            const srcPath = icon.$.src;
+                            const ext = path.extname(srcPath);
+                            const baseName = path.basename(srcPath, ext);
+                            const dirName = path.dirname(srcPath);
+                            const newSrcPath = path.join(dirName, `${baseName}${env}${ext}`);
+                            icon.$.src = newSrcPath.replace(/\\/g, '/'); // Normaliza para barras normais
+                        }
+                    });
+                }
+            });
+        }
+
+        const newXmlContent = builder.buildObject(result);
+        fs.writeFileSync(configXmlPath, newXmlContent, 'utf-8');
+        console.log("[Modify Config XML] Arquivo config.xml modificado com sucesso!");
+    } catch (err) {
+        console.error("[Modify Config XML] Erro ao modificar o config.xml:", err);
+    }
+
+
 }
 
 
