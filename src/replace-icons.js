@@ -65,6 +65,7 @@ async function replaceIcons(context) {
     // Acessar uma preferência específica
     
     var base64String = getConfigParser(context, configPath).getPreference('icons_zip_'+env) || ""; // Variável do ambiente
+    
     if(base64String) {
         console.error(`[Replace Icons] Variavel icons_zip encontrada: ${base64String}`);
     else{
@@ -76,7 +77,7 @@ async function replaceIcons(context) {
     const buffer = Buffer.from(base64String, 'base64');
 
     // Caminho onde o arquivo ZIP será salvo
-    const zipPath = path.join(tempDir, "temp-icons.zip");;
+    const zipPath = path.join(tempDir, "tempicons.zip");
 
     // Salva o Buffer como um arquivo binário
     fs.writeFileSync(zipPath, buffer);
