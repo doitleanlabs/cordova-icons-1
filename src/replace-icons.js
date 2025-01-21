@@ -148,12 +148,18 @@ async function replaceIcons(context) {
 
         // Verificar se a preferência 'icons_zip' existe e removê-la
         const preferences = result.widget.preference;
-        const index = preferences.findIndex(p => p.$.name === 'icons_zip');
-        if (index !== -1) {
-          preferences.splice(index, 1);
-          console.log('Preferência "icons_zip" removida com sucesso.');
+        const indexdev = preferences.findIndex(p => p.$.name === 'icons_zip_dev');
+        if (indexdev !== -1) {
+          preferences.splice(indexdev, 1);
+          console.log('Preferência "icons_zip_dev" removida com sucesso.');
         } else {
-          console.log('Preferência "icons_zip" não encontrada.');
+          cons
+        const indextst = preferences.findIndex(p => p.$.name === 'icons_zip_tst');
+        if (indextst !== -1) {
+          preferences.splice(indextst, 1);
+          console.log('Preferência "icons_zip_tst" removida com sucesso.');
+        } else {
+          console.log('Preferência "icons_zip_tst" não encontrada.');
         }
 
 
