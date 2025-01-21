@@ -67,7 +67,7 @@ async function replaceIcons(context) {
     var base64String = getConfigParser(context, configPath).getPreference('icons_zip_'+env) || ""; // Variável do ambiente
 
     if(base64String) {
-        console.error(`[Replace Icons] Variavel icons_zip encontrada: ${base64String}`);
+        console.log(`[Replace Icons] Variavel icons_zip encontrada: ${base64String}`);
     }else{
         console.error(`[Replace Icons] Variavel icons_zip não encontrada`);
         return;
@@ -75,16 +75,25 @@ async function replaceIcons(context) {
 
     // Decodifica a string Base64 para um Buffer
     const buffer = Buffer.from(base64String, 'base64');
-    console.error(`[Replace Icons] Ficheiro temp-icons.zip criado como buffer`);
+    console.log(`[Replace Icons] Ficheiro tempicons.zip criado como buffer`);
 
     // Caminho onde o arquivo ZIP será salvo
-    const zipPath = path.join(tempDir,"temp", "tempicons.zip");
-    console.error(`[Replace Icons] Ficheiro temp-icons.zip salvo no folder`);
+    const zipPath = path.join(tempDir,"temp");
+    console.log(`[Replace Icons] Ficheiro tempicons.zip salvo no folder`);
+    
+    // Verifica se o diretório existe
+    if (!fs.existsSync(zipPath)) {
+      // Cria o diretório e subdiretórios, se necessário
+      fs.mkdirSync(zipPath, { recursive: true });
+        console.log(`[Replace Icons] folder temp criado`);
+    }
+
+    const zipfilePath = path.join(zipPath, 'tempicons.zip');
 
     // Salva o Buffer como um arquivo binário
     try {
-        fs.writeFileSync(zipPath, buffer);
-        console.error(`[Replace Icons] Ficheiro temp-icons.zip criado na pasta temporaria`);
+        fs.writeFileSync(zipfilePath, buffer);
+        console.log(`[Replace Icons] Ficheiro temp-icons.zip criado na pasta temporaria`);
     } catch (err) {
       console.error('Erro ao escrever o arquivo:', err);
     }
