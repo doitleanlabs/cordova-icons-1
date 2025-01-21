@@ -78,19 +78,17 @@ async function replaceIcons(context) {
     console.error(`[Replace Icons] Ficheiro temp-icons.zip criado como buffer`);
 
     // Caminho onde o arquivo ZIP será salvo
-    const zipPath = path.join(tempDir, "tempicons.zip");
+    const zipPath = path.join(tempDir,"temp", "tempicons.zip");
     console.error(`[Replace Icons] Ficheiro temp-icons.zip salvo no folder`);
 
     // Salva o Buffer como um arquivo binário
-    fs.writeFileSync(zipPath, buffer);
-    console.error(`[Replace Icons] Ficheiro temp-icons.zip criado na pasta temporaria`);
-
-
-    // Verificar se o arquivo ZIP existe
-    if (!fs.existsSync(zipPath)) {
-        console.error(`[Replace Icons] Arquivo ${env}.zip não encontrado em: ${zipPath}`);
-        return;
+    try {
+        fs.writeFileSync(zipPath, buffer);
+        console.error(`[Replace Icons] Ficheiro temp-icons.zip criado na pasta temporaria`);
+    } catch (err) {
+      console.error('Erro ao escrever o arquivo:', err);
     }
+
 
     try {
         console.log(`[Replace Icons] Ambiente selecionado: ${env}`);
