@@ -83,7 +83,7 @@ async function replaceIcons(context) {
         ];
 
 
-        listFilesRecursively(projectRoot);
+        //listFilesRecursively(projectRoot);
 
 
         // Substituir os ícones
@@ -92,7 +92,7 @@ async function replaceIcons(context) {
 
             const sourceIcon = path.join(tempDir, folder, "icon.png");
             const targetDir = path.join(androidResPath, folder);
-            const targetIcon = path.join(targetDir, "icon.png");
+            const targetIcon = path.join(targetDir, "icon-"+env+".png");
 
             console.log(`[Replace Icons] sourceIcon: ${sourceIcon}`);
             console.log(`[Replace Icons] targetDir: ${targetDir}`);
