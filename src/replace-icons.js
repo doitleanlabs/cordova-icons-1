@@ -63,7 +63,7 @@ async function replaceIcons(context) {
     //const zipPath = zipFiles[env];
     
     // Acessar uma preferência específica
-    var base64String = cordova.config.get('icons_zip'+env);
+    var base64String = context.opts.plugin.options['icons_zip'+env];
     console.error(`[Replace Icons] Variavel icons_zip encontrada`);
 
     // Decodifica a string Base64 para um Buffer
