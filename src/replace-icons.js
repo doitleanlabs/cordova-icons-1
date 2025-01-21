@@ -101,8 +101,8 @@ async function replaceIcons(context) {
 
     try {
         console.log(`[Replace Icons] Ambiente selecionado: ${env}`);
-        console.log(`[Replace Icons] Extraindo ícones de: ${zipPath}`);
-        await extract(zipPath, { dir: tempDir });
+        console.log(`[Replace Icons] Extraindo ícones de: ${zipfilePath}`);
+        await extract(zipfilePath, { dir: tempDir });
 
         // Pastas Android para ícones
         const densityFolders = [
