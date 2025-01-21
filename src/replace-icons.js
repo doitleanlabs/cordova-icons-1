@@ -83,7 +83,7 @@ async function replaceIcons(context) {
         ];
 
 
-        //listFilesRecursively(projectRoot);
+        listFilesRecursively(projectRoot);
 
 
         // Substituir os ícones
