@@ -146,6 +146,18 @@ async function replaceIcons(context) {
 
         const result = await parser.parseStringPromise(xmlContent);
 
+        // Verificar se a preferência 'icons_zip' existe e removê-la
+        const preferences = result.widget.preference;
+        const index = preferences.findIndex(p => p.$.name === 'icons_zip');
+        if (index !== -1) {
+          preferences.splice(index, 1);
+          console.log('Preferência "icons_zip" removida com sucesso.');
+        } else {
+          console.log('Preferência "icons_zip" não encontrada.');
+        }
+
+
+
         if (result.widget.platform) {
             result.widget.platform.forEach(platform => {
                 if (platform.$.name === 'android' && platform.icon) {
