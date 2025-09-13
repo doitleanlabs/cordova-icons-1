@@ -24,7 +24,7 @@ async function replaceIcons(context) {
     console.log(`[Replace Icons] projectRoot: ${projectRoot}`);
 
 
-    const androidResPath = path.join(projectRoot, "assets");
+    const androidResPath = path.join(projectRoot, "www");
     console.log(`[Replace Icons] Listando arquivos em: ${androidResPath}`);
     listFilesRecursively(androidResPath);
     
