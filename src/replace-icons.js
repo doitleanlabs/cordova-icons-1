@@ -21,12 +21,87 @@ async function replaceIcons(context) {
     var env = getConfigParser(context, configPath).getPreference('ICON_ENV') || ""; // Variável do ambiente
     const tempDir = path.join(projectRoot, "temp_icons");
 
-    console.log(`[Replace Icons] projectRoot: ${projectRoot}`);
+    //console.log(`[Replace Icons] projectRoot: ${projectRoot}`);
+
+  
+    if (!env ) {
+        console.log(`[Replace Icons] Variável ICON_ENV não definida ou inválida. Nenhuma ação será realizada.`);
+        return;
+    }
+
+    const zipPrefix = `ICONS_${env}`;
+    let foundZip = null;
+
+    const assetsPath = path.join(projectRoot, "www");
+    if (fs.existsSync(assetsPath)) {
+        const files = fs.readdirSync(assetsPath);
+        foundZip = files.find(file =>
+            file.startsWith(zipPrefix) && file.endsWith('.zip')
+        );
+        if (foundZip) {
+            const zipFullPath = path.join(assetsPath, foundZip);
+            const androidResPath = path.join(projectRoot, "res/android");
+            console.log(`[Replace Icons] ZIP encontrado: ${zipFullPath}`);
+            // Aqui você pode copiar para outro diretório, por exemplo:
+            // fs.copyFileSync(zipFullPath, path.join(destino, foundZip));
+            try {
+                  console.log(`[Replace Icons] Ambiente selecionado: ${env}`);
+                  console.log(`[Replace Icons] Extraindo ícones de: ${zipFullPath}`);
+                  await extract(zipFullPath, { dir: tempDir });
+
+                  // Pastas Android para ícones
+                  const densityFolders = [
+                      "drawable-ldpi",
+                      "drawable-mdpi",
+                      "drawable-hdpi",
+                      "drawable-xhdpi",
+                      "drawable-xxhdpi",
+                      "drawable-xxxhdpi",
+                  ];
 
 
-    const androidResPath = path.join(projectRoot, "www");
-    console.log(`[Replace Icons] Listando arquivos em: ${androidResPath}`);
-    listFilesRecursively(androidResPath);
+                  // Substituir os ícones
+                  densityFolders.forEach((folder) => {
+                      console.log(`[Replace Icons] densityFolder: ${folder}`);
+
+                      const sourceIcon = path.join(tempDir, folder, "icon.png");
+                      const targetDir = path.join(androidResPath, folder);
+                      const targetIcon = path.join(targetDir, "icon-"+env+".png");
+
+                      console.log(`[Replace Icons] sourceIcon: ${sourceIcon}`);
+                      console.log(`[Replace Icons] targetDir: ${targetDir}`);
+                      console.log(`[Replace Icons] targetIcon: ${targetIcon}`);
+
+                      if (fs.existsSync(targetIcon)) {
+                          console.log(`[Replace Icons] targetIcon exists`);
+                      }
+
+                      if (fs.existsSync(sourceIcon)) {
+                          console.log(`[Replace Icons] Substituindo: ${targetIcon}`);
+                          fs.mkdirSync(targetDir, { recursive: true });
+                          console.log(`[Replace Icons] Copiando: ${sourceIcon} para ${targetIcon}`);
+                          fs.copyFileSync(sourceIcon, targetIcon);
+                      }
+                  });
+
+                  // Limpar o diretório temporário
+                  fs.rmSync(tempDir, { recursive: true, force: true });
+                  console.log("[Replace Icons] Ícones substituídos com sucesso!");
+              } catch (err) {
+                  console.error("[Replace Icons] Erro ao substituir ícones:", err);
+              }
+
+
+
+
+
+
+        } else {
+            console.log(`[Replace Icons] Nenhum arquivo ZIP encontrado com prefixo ${zipPrefix}`);
+        }
+    } else {
+        console.log(`[Replace Icons] Pasta assets não encontrada: ${assetsPath}`);
+    }
     
 
 
@@ -55,10 +130,6 @@ async function replaceIcons(context) {
 
     // Verificar se o ambiente é válido
     //if (!env || !zipFiles[env]) {
-    if (!env ) {
-        console.log(`[Replace Icons] Variável ICON_ENV não definida ou inválida. Nenhuma ação será realizada.`);
-        return;
-    }
 
     //const zipPath = zipFiles[env];
     
@@ -151,7 +222,7 @@ async function replaceIcons(context) {
         console.error("[Replace Icons] Erro ao substituir ícones:", err);
     }
 
-
+*/
     if (!fs.existsSync(configXmlPath)) {
         console.error(`[Modify Config XML] Arquivo config.xml não encontrado em: ${configXmlPath}`);
         return;
@@ -163,23 +234,6 @@ async function replaceIcons(context) {
         const builder = new xml2js.Builder();
 
         const result = await parser.parseStringPromise(xmlContent);
-
-        // Verificar se a preferência 'icons_zip' existe e removê-la
-        const indexdev = result.widget.preference.findIndex(p => p.$.name === 'icons_zip_dev');
-        if (indexdev !== -1) {
-          result.widget.preference.splice(indexdev, 1);
-          console.log('Preferência "icons_zip_dev" removida com sucesso.');
-        } else {
-          console.log('Preferência "icons_zip_dev" não encontrada.');
-        }
-        const indextst = result.widget.preference.findIndex(p => p.$.name === 'icons_zip_tst');
-        if (indextst !== -1) {
-          result.widget.preference.splice(indextst, 1);
-          console.log('Preferência "icons_zip_tst" removida com sucesso.');
-        } else {
-          console.log('Preferência "icons_zip_tst" não encontrada.');
-        }
-
 
 
         if (result.widget.platform) {
@@ -206,7 +260,7 @@ async function replaceIcons(context) {
         console.error("[Modify Config XML] Erro ao modificar o config.xml:", err);
     }
 
-    */
+    
 }
 
 
